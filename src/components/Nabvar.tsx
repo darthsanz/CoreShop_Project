@@ -1,5 +1,6 @@
 import { ShoppingCart } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
+import Logo_icon from "../assets/Core_Icon.png";
 
 export const Navbar = () => {
   //usamos el intercomunicador, le decimos al gerente que nos diga solo lo que hay en el carrito
@@ -13,8 +14,13 @@ export const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo de coreShop */}
           <div className="shrink-0 flex items-center cursor-pointer">
-            <h1 className="text-2xl font-bold text-core-blue tracking-tight">
-              Core<span className="text-core-cyan">Shop</span>
+            <img
+              src={Logo_icon}
+              alt="CoreShop Icon"
+              className="h-10 w-10 mr-2"
+            />
+            <h1 className="text-4xl font-extrabold text-core-blue tracking-tight">
+              Core<span className="text-core-cyan font-medium">Shop</span>
             </h1>
           </div>
           {/* Icono del carrito con su contador */}

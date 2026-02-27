@@ -2,16 +2,19 @@
 
 @theme {
   /*Colores de la coreshop*/
-  --color-core-blue: #1e3a8a;
+  --color-core-blue: #0077B6;
   --color-core-cyan: #00b4d8;
   --color-core-bg: #f8fafc;
   --color-core-text: #334155;
+  /* fuente principal */
+  --font-sans:'Inter', system-ui, -apple-system, sans-serif; 
+   
 }
 
 body {
   background-color: var(--color-core-bg);
   color: var(--color-core-text);
-  font-family:
+  /* font-family:
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
@@ -22,7 +25,7 @@ body {
     Cantarell,
     "Open Sans",
     "Helvetica Neue",
-    sans-serif;
+    sans-serif; */
   margin: 0;
   padding: 0;
 }
