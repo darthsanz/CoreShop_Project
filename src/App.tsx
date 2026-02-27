@@ -3,6 +3,7 @@ import { Navbar } from "./components/Nabvar";
 import { ProductCard } from "./components/ProductCard";
 import { getProducts } from "./services/product";
 import type { Product } from "./types";
+import { CartDrawer } from "./components/CartDrawer";
 
 function App() {
   //1.Estado local: aqui guardaremos las cajas que traiga el repartidor
@@ -27,10 +28,12 @@ function App() {
     };
     fetchStoreData();
   }, []); // El arreglo vacío [] significa "solo hazlo al abrir la página"
+
   return (
     <div className="min-h-screen bg-core-bg">
       {/* Nuestro Letrero y Carrito */}
       <Navbar />
+      <CartDrawer />
       {/* Contenedor principal */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-3xl font-extrabold text-core-text mb-8">
