@@ -24,11 +24,11 @@ export const CartDrawer = () => {
       <div className="absolute inset-y-0 right-0 max-w-md w-full flex">
         <div className="w-full h-full bg-white shadow-2xl flex flex-col animate-slide-in-right">
           {/* Cabecera del panel */}
-          <div className="flex-item-center justify-between p-5 border-b border-gray-100">
+          <div className="flex justify-between items-center p-5 border-b border-gray-100">
             <h2 className="text-2xl font-bold text-core-blue">Tu Carrito</h2>
             <button
               onClick={closeCart}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
             >
               <X className="h-6 w-6 text-gray-500" />
             </button>
@@ -50,10 +50,10 @@ export const CartDrawer = () => {
                     />
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-core-text line-clamp-1">
-                        ${item.title}
+                        {item.title}
                       </h3>
                       <p className="text-sm text-gray-500 mt-1">
-                        Cant:{item.quantity} x ${item.price}
+                        Cant: {item.quantity} x ${item.price}
                       </p>
                     </div>
                     <p className="font-extrabold text-core-blue">
@@ -61,7 +61,7 @@ export const CartDrawer = () => {
                     </p>
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      className="text-red-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                      className="text-red-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors cursor-pointer"
                     >
                       <Trash2 className="h-5 w-5" />
                     </button>
@@ -81,12 +81,12 @@ export const CartDrawer = () => {
                   ${totalAmount.toFixed(2)}
                 </span>
               </div>
-              <button className="w-full bg-core-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-core-cyan transition-color shadow-lg shadow-core-blue/30">
+              <button className="w-full bg-core-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-core-cyan transition-color shadow-lg shadow-core-blue/30 cursor-pointer">
                 Proceder al pago
               </button>
               <button
                 onClick={clearCart}
-                className="w-full mt-4 text-sm font-semibold text-gray-500 hover:text-red-500 transition-colors"
+                className="w-full mt-4 text-sm font-semibold text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
               >
                 Vaciar carrito
               </button>

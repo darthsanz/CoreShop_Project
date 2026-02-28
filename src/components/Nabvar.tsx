@@ -19,7 +19,7 @@ export const Navbar = () => {
               <img
                 src={Logo_icon}
                 alt="CoreShop Icon"
-                className="h-10 w-10 mr-2"
+                className="h-10 w-10 mr-1"
               />
               <h1 className="text-4xl font-extrabold text-core-blue tracking-tight">
                 Core<span className="text-core-cyan font-medium">Shop</span>
