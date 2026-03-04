@@ -6,6 +6,7 @@ export interface Product {
   category: string;
   thumbnail: string; //foto principal del producto
   images: string[]; //array de fotos extras
+  stock: number;
 }
 
 export interface DummyJsonResponse {

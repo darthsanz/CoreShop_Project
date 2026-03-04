@@ -1,4 +1,4 @@
-import type { DummyJsonResponse } from "../types"; //importamos la interfaz nuestro cadenero
+import type { DummyJsonResponse, Product } from "../types"; //importamos la interfaz nuestro cadenero
 
 //Creamos la funcion para ir a buscar los productos
 //Promete que lo que devolceras tiene cumple con la forma exacta de DummyJsonResponse
@@ -31,6 +31,21 @@ export const getProducts = async (): Promise<DummyJsonResponse> => {
     };
   } catch (error) {
     console.error("Hubo un pronlema en el servicio de productos:", error);
+    throw error;
+  }
+};
+
+export const getProductsById = async (id: string): Promise<Product> => {
+  try {
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
+
+    if (!response.ok) {
+      throw new Error("No se pudo encontrar el producto en la bodega");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error al buscar el producto ${id}:`, error);
     throw error;
   }
 };

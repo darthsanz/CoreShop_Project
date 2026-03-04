@@ -1,6 +1,7 @@
 import type { Product } from "../types";
 import { useCartStore } from "../store/cartStore";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 // EL CADENERO DEL COMPONENTE
 // Le decimos a React: "Esta tarjeta NO se dibuja si no le pasas un Producto válido".
@@ -14,9 +15,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const addToCart = useCartStore((state) => state.addToCart); //Aqui le decimos que solo queremos
   // su funcion de añadir al carrito (state.addToCart)
   const handleAddToCart = () => {
+    //funciin para gestionar el carrito
     addToCart(product); //1.le avisa al gerente
     //2.lanza el mensaje visual
-    toast.success(`!${product.title} agregado al carrito`, {
+    toast.success(`${product.title} agregado al carrito`, {
       style: {
         background: "#1E293B",
         color: "#fff",
@@ -30,32 +32,42 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col">
-      {/* Foto del producto */}
-      <div className="h-48 w-full bg-gray-50 p-4 cursor-pointer">
+    <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-row sm:flex-col group">
+      {/* 1. LADO IZQUIERDO (Móvil) / ARRIBA (PC): La Imagen */}
+      <Link
+        to={`/producto/${product.id}`}
+        className="w-2/5 sm:w-full sm:h-48 bg-gray-50 p-2 sm:p-4 shrink-0 flex items-center justify-center cursor-pointer"
+      >
         <img
           src={product.thumbnail}
           alt={product.title}
-          className="h-full w-full object-contain mix-blend-multiply"
+          className="h-28 w-full sm:h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
         />
-      </div>
-      {/* Informacion del producto */}
-      <div className="p-5 flex flex-col grow">
-        <h3 className="text-lg font-bold text-core-text line-clamp-1">
-          {product.title}
-        </h3>
-        <p className="text-sm text-gray-500 mt-1 line-clamp-2 grow">
-          {product.description}
-        </p>
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-xl font-extrabold text-core-blue">
+      </Link>
+
+      {/* 2. LADO DERECHO (Móvil) / ABAJO (PC): La Información */}
+      <div className="w-3/5 sm:w-full p-3 sm:p-5 flex flex-col grow justify-between">
+        {/* Textos */}
+        <Link
+          to={`/producto/${product.id}`}
+          className="cursor-pointer mb-2 sm:mb-0"
+        >
+          <h3 className="text-sm sm:text-lg font-bold text-core-text line-clamp-2 sm:line-clamp-1 group-hover:text-core-blue transition-colors">
+            {product.title}
+          </h3>
+          <p className="hidden sm:block text-sm text-gray-500 mt-1 line-clamp-2">
+            {product.description}
+          </p>
+        </Link>
+
+        {/* Precio y Botón */}
+        <div className="mt-auto pt-2 sm:pt-4 flex flex-wrap sm:flex-nowrap items-center justify-between border-t border-transparent sm:border-gray-50 gap-2">
+          <span className="text-base sm:text-xl font-extrabold text-core-blue">
             ${product.price}
           </span>
-          {/* BOTON MAGICO */}
-          {/* Al hacer click llamamos la funciond el gerente y le damos este producto exactp */}
           <button
             onClick={handleAddToCart}
-            className="bg-core-blue hover:bg-core-cyan text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 shadow-md hover:shadow-lg cursor-pointer"
+            className="bg-core-blue hover:bg-core-cyan text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-base font-semibold transition-colors duration-200 shadow-md hover:shadow-lg relative z-10 w-full sm:w-auto"
           >
             Agregar
           </button>
