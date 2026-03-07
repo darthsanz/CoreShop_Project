@@ -1,10 +1,17 @@
 import { X, Trash2 } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
+import { useNavigate } from "react-router-dom";
 
 export const CartDrawer = () => {
   //Traemos toda la oficina del gerente que necesitamospara el carrito
   const { cart, isCartOpen, closeCart, removeFromCart, clearCart } =
     useCartStore();
+  //Conductor
+  const navigate = useNavigate();
+  const handleCheckoutClick = () => {
+    closeCart(); //cerramos el panel lateral
+    navigate("/checkout"); //Y redireccionamos al checkout
+  };
   //Calculamos el total a pagar
   const totalAmount = cart.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -81,7 +88,10 @@ export const CartDrawer = () => {
                   ${totalAmount.toFixed(2)}
                 </span>
               </div>
-              <button className="w-full bg-core-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-core-cyan transition-color shadow-lg shadow-core-blue/30 cursor-pointer">
+              <button
+                onClick={handleCheckoutClick}
+                className="w-full bg-core-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-core-cyan transition-color shadow-lg shadow-core-blue/30 cursor-pointer"
+              >
                 Proceder al pago
               </button>
               <button

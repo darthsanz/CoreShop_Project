@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { Navbar } from "./components/Nabvar";
 import { CartDrawer } from "./components/CartDrawer";
 import { Home } from "./pages/Home";
 import { ProductDetail } from "./pages/ProductDetail";
+import { Checkout } from "./pages/Checkout";
 
 function App() {
   return (
@@ -15,13 +16,18 @@ function App() {
         <CartDrawer />
         <Toaster position="bottom-right" />
 
-        {/* Aquí ponemos las "Puertas" a las diferentes habitaciones */}
+        {/*## Aquí ponemos las "Puertas" a las diferentes habitaciones ##*/}
         <Routes>
-          {/* Si la URL es "/", abre la puerta del Catálogo (Home) */}
+          {/* Direccion de la habitacion para el catalogo*/}
           <Route path="/" element={<Home />} />
 
-          {/* Si la URL es "/producto/123", abre la puerta de los Detalles */}
+          {/* Direccion de la habitacion de detalles de producto*/}
           <Route path="/producto/:id" element={<ProductDetail />} />
+
+          {/* Direccion de la habitacion del proceso de pago */}
+          <Route path="/checkout" element={<Checkout />} />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </BrowserRouter>
