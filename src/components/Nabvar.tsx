@@ -1,7 +1,8 @@
-import { ShoppingCart, Search } from "lucide-react";
+import { ShoppingCart, Search, Heart } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCartStore } from "../store/cartStore";
 import { useSearchStore } from "../store/searchStore";
+import { useFavoriteStore } from "../store/favoriteStore";
 import Logo_icon from "../assets/Core_Icon.png";
 import type React from "react";
 
@@ -9,6 +10,10 @@ export const Navbar = () => {
   //usamos el intercomunicador, le decimos al gerente que nos diga solo lo que hay en el carrito
   const cart = useCartStore((state) => state.cart);
   const openCart = useCartStore((state) => state.openCart);
+
+  //Leemos los favoritos
+  const favorites = useFavoriteStore((state) => state.favorites);
+  const totalFavorites = favorites.length;
 
   //Aqui llamamos al nuevo gerente y a los navegadores de react router
   const { searchTerm, setSearchTerm } = useSearchStore();
@@ -60,6 +65,20 @@ export const Navbar = () => {
               />
               <Search className="absolute left-4 top-3 h-5 w-5 text-gray-400 group-focus-within:text-core-blue transition-colors" />
             </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              to="/favoritos"
+              className="relative p-2 hover:bg-red-50 rounded-full transition-colors"
+            >
+              <Heart className="h-7 w-7 text-core-text hover:text-red-500 transition-colors" />
+              {totalFavorites > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold h-6 w-6 flex items-center justify-center rounded-full border-2 border-white shadow-sm animate-pulse">
+                  {totalFavorites}
+                </span>
+              )}
+            </Link>
           </div>
 
           {/* Icono del carrito con su contador */}

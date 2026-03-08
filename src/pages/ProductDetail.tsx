@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom"; //este lee la url, link nospermite regresar al inicio
+import { useParams, Link, useNavigate } from "react-router-dom"; //este lee la url, link nospermite regresar al inicio
 import { ArrowLeft, ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 export const ProductDetail = () => {
   //Leemos el ID directamente de la URL (ej. si es /producto/5, id será "5")
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -72,13 +73,13 @@ export const ProductDetail = () => {
     <div className="min-h-screen bg-core-bg py-7 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Botón para regresar al catálogo */}
-        <Link
-          to="/"
-          className="inline-flex items-center text-gray-500 hover:text-core-blue transition-colors mb-1 md:mb-8 font-semibold"
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center text-gray-500 hover:text-core-blue transition-colors mb-1 md:mb-8 font-semibold cursor-pointer"
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
-          Volver al Catálogo
-        </Link>
+          Volver
+        </button>
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
           {/* Lado izquierdo: la foto gigante */}
           <div className="md:w-1/2 bg-gray-50 p-1 md:p-6 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-100">
@@ -111,7 +112,7 @@ export const ProductDetail = () => {
               </div>
               <button
                 onClick={handleAddToCart}
-                className="w-full bg-core-blue hover:bg-core-cyan text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-core-cyan/50 flex items-center justify-center"
+                className="w-full bg-core-blue hover:bg-core-cyan text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-core-cyan/50 flex items-center justify-center cursor-pointer"
               >
                 <ShoppingCart className="mr-3 h-6 w-6" />
                 Agregar al Carrito

@@ -2,6 +2,8 @@ import type { Product } from "../types";
 import { useCartStore } from "../store/cartStore";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { Heart } from "lucide-react";
+import { useFavoriteStore } from "../store/favoriteStore";
 
 // EL CADENERO DEL COMPONENTE
 // Le decimos a React: "Esta tarjeta NO se dibuja si no le pasas un Producto válido".
@@ -14,6 +16,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   //Ahora le decimos al gerente, prestame tu funcion de agregar cosas
   const addToCart = useCartStore((state) => state.addToCart); //Aqui le decimos que solo queremos
   // su funcion de añadir al carrito (state.addToCart)
+  //Traemos la lista y la funcion de alternar
+  const favorites = useFavoriteStore((state) => state.favorites);
+  const toggleFavorite = useFavoriteStore((state) => state.toggleFavorite);
+  //Verificamos si este producto (el que se esta dibujando) esta en la lista
+  const isFavorite = favorites.some((p) => p.id === product.id);
+
   const handleAddToCart = () => {
     //funciin para gestionar el carrito
     addToCart(product); //1.le avisa al gerente
@@ -33,17 +41,35 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-row sm:flex-col group">
-      {/* 1. LADO IZQUIERDO (Móvil) / ARRIBA (PC): La Imagen */}
-      <Link
-        to={`/producto/${product.id}`}
-        className="w-2/5 sm:w-full sm:h-48 bg-gray-50 p-2 sm:p-4 shrink-0 flex items-center justify-center cursor-pointer"
-      >
-        <img
-          src={product.thumbnail}
-          alt={product.title}
-          className="h-28 w-full sm:h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
-        />
-      </Link>
+      {/* Envolvemos en un nuevo div la imagen y el corazon */}
+      <div className="relative w-2/5 sm:w-full sm:h-48 bg-gray-50 shrink-0 flex items-center justify-center">
+        <button
+          onClick={(e) => {
+            e.preventDefault(); //evita que al darle clic al corazon nos mande a detalles
+            toggleFavorite(product);
+            toast.success(
+              isFavorite ? "Eliminado de favoritos" : "Agregado a favoritos",
+              { icon: isFavorite ? "💔" : "❤️" },
+            );
+          }}
+          className="absolute top-2 right-2 z-20 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:scale-110 transition-transform duration-200"
+        >
+          <Heart
+            className={`h-5 w-5 transition-colors duration-300 ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"}`}
+          />
+        </button>
+        {/* 1. LADO IZQUIERDO (Móvil) / ARRIBA (PC): La Imagen */}
+        <Link
+          to={`/producto/${product.id}`}
+          className="w-full h-full p-2 sm:p-4 shrink-0 flex items-center justify-center cursor-pointer"
+        >
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className="h-28 w-full sm:h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
+          />
+        </Link>
+      </div>
 
       {/* 2. LADO DERECHO (Móvil) / ABAJO (PC): La Información */}
       <div className="w-3/5 sm:w-full p-3 sm:p-5 flex flex-col grow justify-between">

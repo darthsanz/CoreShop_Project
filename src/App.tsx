@@ -5,6 +5,7 @@ import { CartDrawer } from "./components/CartDrawer";
 import { Home } from "./pages/Home";
 import { ProductDetail } from "./pages/ProductDetail";
 import { Checkout } from "./pages/Checkout";
+import { Favorites } from "./pages/Favorites";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
 
           {/* Direccion de la habitacion de detalles de producto*/}
           <Route path="/producto/:id" element={<ProductDetail />} />
+
+          {/* Direccion de la habitacion de Favoritos */}
+          <Route path="/favoritos" element={<Favorites />}></Route>
 
           {/* Direccion de la habitacion del proceso de pago */}
           <Route path="/checkout" element={<Checkout />} />
