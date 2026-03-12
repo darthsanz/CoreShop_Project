@@ -2,11 +2,18 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, CreditCard, CheckCircle, Loader2 } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 import React, { useState } from "react";
+import { useAuthStore } from "../store/authStore";
+import { useOrderStore } from "../store/orderStore";
 // import toast from "react-hot-toast";
 // import { resolve } from "path";
 
 export const Checkout = () => {
   const { cart, clearCart } = useCartStore();
+
+  //traemos al usuario actual y la funcion para guardar ordenes
+  const { user } = useAuthStore();
+  const addOrder = useOrderStore((state) => state.addOrder);
+
   const totalAmount = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
@@ -21,6 +28,16 @@ export const Checkout = () => {
     setIsProcessing(true);
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    const newOrder = {
+      id: crypto.randomUUID(), //Genera un ID unico para este ticket
+      userId: user ? user.uid : "invitado", //Si no hay un usuario es un invitado
+      date: new Date().toISOString(), //guardamos la fecha y la hora exacta
+      items: cart,
+      total: totalAmount,
+    };
+
+    addOrder(newOrder); //lo guardamos en el archivero
 
     setIsProcessing(false);
     setIsSuccess(true);

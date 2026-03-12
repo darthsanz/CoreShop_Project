@@ -2,13 +2,20 @@ import { Link } from "react-router-dom";
 import { Heart, ArrowLeft } from "lucide-react";
 import { useFavoriteStore } from "../store/favoriteStore";
 import { ProductCard } from "../components/ProductCard";
+import { useAuthStore } from "../store/authStore";
 
 export const Favorites = () => {
-  //Le pedimos al gerente que nos traiga la lista completa
-  const favorites = useFavoriteStore((state) => state.favorites);
+  const { user } = useAuthStore();
+  const currentUserId = user ? user.uid : "invitado";
+
+  const allFavorites = useFavoriteStore((state) => state.favorites);
+  //Extraemos solo los productos de las cajas con el nombre de la cuenta logueada
+  const myFavoriteProducts = allFavorites
+    .filter((fav) => fav.userId === currentUserId)
+    .map((fav) => fav.product);
 
   //Si no hay favoritos mostramos un mensaje
-  if (favorites.length === 0) {
+  if (myFavoriteProducts.length === 0) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-core-bg animate-fade-in">
         <Heart className="h-24 w-24 text-gray-300 mb-6" />
@@ -21,7 +28,7 @@ export const Favorites = () => {
         </p>
         <Link
           to="/"
-          className="bg-core-blue text-white px-8 rounded-xl font-bold hover:bg-core-cyan transition-colors shadow-lg hover:shadow-core-cyan/50"
+          className="bg-core-blue text-white py-4 px-8 rounded-xl font-bold hover:bg-core-cyan transition-colors shadow-lg hover:shadow-core-cyan/50"
         >
           Descubrir productos
         </Link>
@@ -46,7 +53,7 @@ export const Favorites = () => {
         </div>
         {/* Reutilizamos el grid y las tarjetas */}
         <div className="grid grid-cols-1 sm:grind-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {favorites.map((product) => (
+          {myFavoriteProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

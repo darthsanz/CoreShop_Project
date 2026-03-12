@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
 import { useFavoriteStore } from "../store/favoriteStore";
+import { useAuthStore } from "../store/authStore";
 
 // EL CADENERO DEL COMPONENTE
 // Le decimos a React: "Esta tarjeta NO se dibuja si no le pasas un Producto válido".
@@ -12,15 +13,22 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+  //Traemos al usuario actual
+  const { user } = useAuthStore();
+  const currentUserId = user ? user.uid : "invitado";
+
+  const allFavorites = useFavoriteStore((state) => state.favorites);
+  const toggleFavorite = useFavoriteStore((state) => state.toggleFavorite);
+
+  //verificamos si este producto esta en la lista de este usuario
+  const isFavorite = allFavorites.some(
+    (fav) => fav.userId === currentUserId && fav.product.id === product.id,
+  );
+
   //USAMOS EL INTERCOMUNICADOR OTRA VEZ
   //Ahora le decimos al gerente, prestame tu funcion de agregar cosas
   const addToCart = useCartStore((state) => state.addToCart); //Aqui le decimos que solo queremos
   // su funcion de añadir al carrito (state.addToCart)
-  //Traemos la lista y la funcion de alternar
-  const favorites = useFavoriteStore((state) => state.favorites);
-  const toggleFavorite = useFavoriteStore((state) => state.toggleFavorite);
-  //Verificamos si este producto (el que se esta dibujando) esta en la lista
-  const isFavorite = favorites.some((p) => p.id === product.id);
 
   const handleAddToCart = () => {
     //funciin para gestionar el carrito

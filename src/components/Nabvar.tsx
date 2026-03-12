@@ -1,4 +1,11 @@
-import { ShoppingCart, Search, Heart, User, LogOut } from "lucide-react";
+import {
+  ShoppingCart,
+  Search,
+  Heart,
+  User,
+  LogOut,
+  Package,
+} from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCartStore } from "../store/cartStore";
 import { useSearchStore } from "../store/searchStore";
@@ -12,15 +19,19 @@ export const Navbar = () => {
   const cart = useCartStore((state) => state.cart);
   const openCart = useCartStore((state) => state.openCart);
 
-  //Leemos los favoritos
-  const favorites = useFavoriteStore((state) => state.favorites);
-  const totalFavorites = favorites.length;
+  //Leemos quién está logueado y traemos la función de cerrar sesión
+  const { user, logout } = useAuthStore();
+  const currentUserId = user ? user.uid : "invitado";
+
+  //filtamos lalista de favoritos para contar solo los de quien este logueado
+  const allFavorites = useFavoriteStore((state) => state.favorites);
+  const myFavorites = allFavorites.filter(
+    (fav) => fav.userId === currentUserId,
+  );
+  const totalFavorites = myFavorites.length;
 
   //Aqui llamamos al nuevo gerente y a los navegadores de react router
   const { searchTerm, setSearchTerm } = useSearchStore();
-
-  //Leemos quién está logueado y traemos la función de cerrar sesión
-  const { user, logout } = useAuthStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -98,7 +109,20 @@ export const Navbar = () => {
 
               {/* Menu flotante para cerrar sesion */}
               <div className="absolute top-full right-0 mt-1 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="p-2">
+                <div className="p-2 flex flex-col gap-1">
+                  {/* Boton de mis compras */}
+                  <Link
+                    to="/mis-compras"
+                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-core-blue font-bold rounded-xl transition-colors"
+                  >
+                    <Package className="h-4 w-4" />
+                    Mis compras
+                  </Link>
+
+                  {/* Divisor */}
+                  <div className="h-px bg-gray-100 my-1 mx-2"></div>
+
+                  {/* Boton de salir */}
                   <button
                     onClick={logout}
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-bold rounded-xl transition-colors"

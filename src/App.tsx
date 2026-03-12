@@ -7,6 +7,7 @@ import { ProductDetail } from "./pages/ProductDetail";
 import { Checkout } from "./pages/Checkout";
 import { Favorites } from "./pages/Favorites";
 import { Login } from "./pages/Login";
+import { Orders } from "./pages/Orders";
 import { useEffect } from "react";
 import { auth } from "./lib/firebase";
 import { useAuthStore } from "./store/authStore";
@@ -38,7 +39,8 @@ const App = () => {
         <Routes>
           {/* Habitacion del login */}
           <Route path="/login" element={<Login />} />
-          {/* Direccion de la habitacion para el catalogo*/}
+
+          {/* Direccion de la habitacion para el catalogo(Incio)*/}
           <Route path="/" element={<Home />} />
 
           {/* Direccion de la habitacion de detalles de producto*/}
@@ -49,6 +51,9 @@ const App = () => {
 
           {/* Direccion de la habitacion del proceso de pago */}
           <Route path="/checkout" element={<Checkout />} />
+
+          {/* Direccion de la habitacion de historial de compras(Orders) */}
+          <Route path="/mis-compras" element={<Orders />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
