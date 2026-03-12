@@ -1,10 +1,11 @@
-import { ShoppingCart, Search, Heart } from "lucide-react";
+import { ShoppingCart, Search, Heart, User, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCartStore } from "../store/cartStore";
 import { useSearchStore } from "../store/searchStore";
 import { useFavoriteStore } from "../store/favoriteStore";
 import Logo_icon from "../assets/Core_Icon.png";
 import type React from "react";
+import { useAuthStore } from "../store/authStore";
 
 export const Navbar = () => {
   //usamos el intercomunicador, le decimos al gerente que nos diga solo lo que hay en el carrito
@@ -17,6 +18,10 @@ export const Navbar = () => {
 
   //Aqui llamamos al nuevo gerente y a los navegadores de react router
   const { searchTerm, setSearchTerm } = useSearchStore();
+
+  //Leemos quién está logueado y traemos la función de cerrar sesión
+  const { user, logout } = useAuthStore();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -66,6 +71,59 @@ export const Navbar = () => {
               <Search className="absolute left-4 top-3 h-5 w-5 text-gray-400 group-focus-within:text-core-blue transition-colors" />
             </div>
           </div>
+          {/* Perfil/Login */}
+          {user ? (
+            //Si el usuario esta logueado
+            <div className="relative group cursor-pointer flex items-center gap-2 p-1 sm:p-2 rounded-full hover:bg-gray-50 transition-colors">
+              {/* Mostramos su foto de google o la inicial de su correo */}
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt="Avatar"
+                  className="w-8 h-8 rounded-full border-gray-200 object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-linear-to-br from-core-blue to bg-core-cyan text-white flex items-center justify-center font-bold text-sm ">
+                  {user.email?.charAt(0).toUpperCase()}
+                </div>
+              )}
+              {/* Nombre, solo visibles apartir de pantallas medianas */}
+              <div className="hidden md:block text-sm text-left mr-2">
+                <p className="text-gray-500 text-xs leading-none">Hola, </p>
+                <p className="font-bold text-gray-800 line-clamp-1 max-w-25 leading-tight mt-0.5]">
+                  {user.displayName || user.email?.split("@"[0])}
+                </p>
+              </div>
+
+              {/* Menu flotante para cerrar sesion */}
+              <div className="absolute top-full right-0 mt-1 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="p-2">
+                  <button
+                    onClick={logout}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-bold rounded-xl transition-colors"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Salir
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            //si el usuario no esta logueado
+            <Link
+              to="/login"
+              className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded-full sm:rounded-xl transition-colors text-gray-600 hover:text-core-blue "
+            >
+              <User className="h-7 w-7 sm:h-6 sm:w-6" />
+              <span className="hidden md:inline text-sm font-bold">
+                Ingresar
+              </span>
+            </Link>
+          )}
+
+          {/* Divisor visual entre perfil y los iconos */}
+          <div className="hidden sm:block h-6 w-px bg-gray-200 mx-1"></div>
 
           <div className="flex items-center gap-2 shrink-0">
             <Link
