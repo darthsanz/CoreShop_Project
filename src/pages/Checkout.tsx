@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, CreditCard, CheckCircle, Loader2 } from "lucide-react";
+import {
+  ArrowLeft,
+  CreditCard,
+  CheckCircle,
+  Loader2,
+  ShoppingCart,
+} from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 import React, { useState } from "react";
 import { useAuthStore } from "../store/authStore";
@@ -47,13 +53,13 @@ export const Checkout = () => {
   //LA PANTALLA DE EXITO (SI YA PAGO)
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-core-bg flex flex-col items-center justify-center px-4 animate-fade-in">
-        <div className="bg-white p-10 rounded-3xl shadow-xl max-w-lg w-full text-center">
+      <div className="min-h-screen bg-core-bg dark:bg-gray-950 flex flex-col items-center justify-center px-4 animate-fade-in">
+        <div className="bg-white dark:bg-gray-900 p-10 rounded-3xl shadow-xl max-w-lg w-full text-center">
           <CheckCircle className="h-24 w-24 text-green-500 mx-auto mb-6 animate-bounce" />
-          <h1 className="text-4xl font-extrabold text-core-text mb-4">
+          <h1 className="text-4xl font-extrabold text-core-text dark:text-gray-100 mb-4">
             ¡Pago Exitoso!
           </h1>
-          <p className="text-gray-500 mb-8 text-lg">
+          <p className="text-gray-500 dark:text-gray-200 mb-8 text-lg">
             Tu pedido ha sido confirmado. Te enviaremos los detalles a tu correo
             electrónico.
           </p>
@@ -71,16 +77,19 @@ export const Checkout = () => {
   //LA PANTALLA SI EL USUARIO ENTRA SIN NADA EN EL CARRITO
   if (cart.length === 0) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-core-bg px-4">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-core-bg dark:bg-gray-950 px-4">
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-full shadow-sm mb-6 border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+          <ShoppingCart className="h-24 w-24 text-gray-300 dark:text-gray-400" />
+        </div>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Tu carrito está vacio
         </h2>
-        <p className="text-gray-500 mb-8 text-center">
+        <p className="text-gray-500 dark:text-white mb-8 text-center">
           Agrega algunos productos antes de proceder al pago
         </p>
         <Link
           to="/"
-          className="bg-core-blue text-white px-6 py-3 rounded-xl font-bold hover:bg-core-cyan transition-colors"
+          className="bg-core-blue text-white px-6 py-3 rounded-xl font-bold hover:bg-core-cyan shadow-lg hover:shadow-core-cyan/50 transition-colors"
         >
           Volver a la tienda
         </Link>
@@ -89,20 +98,20 @@ export const Checkout = () => {
   }
   // LA PANTALLA DE FORMULARIO DE PAGO
   return (
-    <div className="min-h-screen bg-core-bg py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-core-bg dark:bg-gray-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <Link
           to="/"
-          className="inline-flex items-center text-gray-500 hover:text-core-blue transition-colors mb-8 font-semibold"
+          className="inline-flex items-center text-gray-500 dark:text-gray-100 hover:text-core-blue dark:hover:text-core-cyan transition-colors mb-8 font-semibold"
         >
           <ArrowLeft className="h-5 w-5 mr-2"></ArrowLeft>
           Volver a la tienda
         </Link>
 
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden p-8">
-          <div className="flex items-center gap-3 mb-8 border-b border-gray-100 p-6">
-            <CreditCard className="h-8 w-8 text-core-blue" />
-            <h1 className="text-3xl font-extrabold text-core-text">
+        <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden p-8">
+          <div className="flex items-center gap-3 mb-8 border-b border-gray-100 dark:border-gray-600 p-6">
+            <CreditCard className="h-8 w-8 text-core-blue dark:text-core-cyan" />
+            <h1 className="text-3xl font-extrabold text-core-text dark:text-gray-100">
               Finalizar compra
             </h1>
           </div>
@@ -110,7 +119,7 @@ export const Checkout = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Lado izquierdo:Formulario, en construccion */}
             <div>
-              <h2 className="text-xl font-bold text-gray-500 mb-4">
+              <h2 className="text-xl font-bold text-gray-500 dark:text-gray-100 mb-4">
                 Datos de Envío y Pago
               </h2>
               {/* Al enviar el formulario se ejecuta handlePayment */}
@@ -121,31 +130,31 @@ export const Checkout = () => {
               >
                 {/* Campos requeridos simples */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-50 mb-1">
                     Nombre Completo
                   </label>
                   <input
                     required
                     type="text"
                     placeholder="Ej. Juan Pérez"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-50 mb-1">
                     Dirección de Envio
                   </label>
                   <input
                     required
                     type="text"
                     placeholder="Calle, Número, Ciudad"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all "
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all "
                   />
                 </div>
 
-                <div className="pt-4 border-t border-gray-100">
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <div className="pt-4 border-t border-gray-100 dark:border-gray-600">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">
                     Número de Tarjeta (Ficticio)
                   </label>
                   <input
@@ -153,12 +162,12 @@ export const Checkout = () => {
                     type="text"
                     maxLength={16}
                     placeholder="0000 0000 0000 0000"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all font-mono"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all font-mono"
                   />
                 </div>
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-50 mb-1">
                       Fecha (MM/AA)
                     </label>
                     <input
@@ -166,11 +175,11 @@ export const Checkout = () => {
                       type="text"
                       maxLength={5}
                       placeholder="12/25"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all font-mono"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all font-mono"
                     />
                   </div>
                   <div className="w-1/2">
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-50 mb-1">
                       CVC
                     </label>
                     <input
@@ -178,7 +187,7 @@ export const Checkout = () => {
                       type="password"
                       maxLength={3}
                       placeholder="***"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all font-mono"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all font-mono"
                     />
                   </div>
                 </div>
@@ -186,8 +195,8 @@ export const Checkout = () => {
             </div>
 
             {/* Lado derecho resumen de la orden             */}
-            <div className="bg-gray-50 p-6 rounded-2xl flex flex-col h-full">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">
+            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl flex flex-col h-full">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
                 Resumen de tu orden
               </h2>
               <ul className="space-y-4 mb-6 max-h-64 overflow-y-auto pr-2 hide-scrollbar">
@@ -203,35 +212,43 @@ export const Checkout = () => {
                         className="w-12 h-12 object-contain bg-white rounded-md p-1 border border-gray-100"
                       />
                       <div>
-                        <p className="font-semibold text-gray-800 line-clamp-1">
+                        <p className="font-semibold text-gray-800 dark:text-gray-200 line-clamp-1">
                           {item.title}
                         </p>
-                        <p className="text-gray-500">Cant: {item.quantity}</p>
+                        <p className="text-gray-500 dark:text-gray-100">
+                          Cant: {item.quantity}
+                        </p>
                       </div>
                     </div>
-                    <p className="font-bold text-core-blue">
+                    <p className="font-bold text-core-blue dark:text-white">
                       ${(item.price * item.quantity).toFixed(2)}
                     </p>
                   </li>
                 ))}
               </ul>
 
-              <div className="border-t border-gray-200 pt-4 mt-auto">
+              <div className="border-t border-gray-200 dark:border-gray-600 pt-4 mt-auto">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-gray-500">Subtotal</span>
-                  <span className="font-extrabold text-gray-500">
+                  <span className="font-semibold text-gray-500 dark:text-gray-200">
+                    Subtotal
+                  </span>
+                  <span className="font-extrabold text-gray-500 dark:text-white">
                     ${totalAmount.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center mb-6">
-                  <span className="text-gray-500 font-semibold">Envío</span>
-                  <span className="font-bold text-gray-500">¡Gratis!</span>
+                  <span className="text-gray-500 dark:text-gray-200 font-semibold">
+                    Envío
+                  </span>
+                  <span className="font-bold text-gray-500 dark:text-white">
+                    ¡Gratis!
+                  </span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-bold text-gray-600">
+                  <span className="font-bold text-gray-600 dark:text-gray-200">
                     Total a pagar:
                   </span>
-                  <span className="text-2xl font-extrabold text-core-blue">
+                  <span className="text-2xl font-extrabold text-core-blue dark:text-white">
                     ${totalAmount.toFixed(2)}
                   </span>
                 </div>

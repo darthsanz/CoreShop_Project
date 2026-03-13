@@ -12,9 +12,20 @@ import { useEffect } from "react";
 import { auth } from "./lib/firebase";
 import { useAuthStore } from "./store/authStore";
 import { onAuthStateChanged } from "firebase/auth";
+import { useThemeStore } from "./store/themeStore";
 
 const App = () => {
   const { setUser, setLoading } = useAuthStore();
+
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
     //onAuthStateChanged es un espia de firebase que avisa cuando alguien se loguea o desloguea
@@ -29,13 +40,25 @@ const App = () => {
   return (
     // BrowserRouter es el "vigilante" que observa la URL del navegador
     <BrowserRouter>
-      <div className="min-h-screen bg-core-bg">
+      <div className="min-h-screen bg-core-bg dark:bg-gray-950 transition-colors duration-300">
         {/* Estos 3 "muebles" siempre están en la pantalla, pase lo que pase */}
         <Navbar />
         <CartDrawer />
-        <Toaster position="bottom-right" />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              //Para modo oscuro gray-800
+              background: isDarkMode ? "#1f2937" : "#ffffff",
+              //Colores del texto
+              color: isDarkMode ? "#f9fafb" : "#111827",
+              //borde para darle mas sabor
+              border: isDarkMode ? "1px solid #374151" : "1px solid #f3f4f6",
+            },
+          }}
+        />
 
-        {/*## Aquí ponemos las "Puertas" a las diferentes habitaciones ##*/}
+        {/*-- Aquí ponemos las "Puertas" a las diferentes habitaciones --*/}
         <Routes>
           {/* Habitacion del login */}
           <Route path="/login" element={<Login />} />

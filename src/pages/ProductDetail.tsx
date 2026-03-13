@@ -45,8 +45,8 @@ export const ProductDetail = () => {
   //Pantalla de carga
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-core-bg">
-        <p className="text-xl text-core-blue font-semibold animate-pulse">
+      <div className="flex justify-center items-center h-screen bg-core-bg dark:bg-black">
+        <p className="text-xl text-core-blue dark:text-gray-100 font-semibold animate-pulse">
           Cargando detalles del producto...
         </p>
       </div>
@@ -55,13 +55,13 @@ export const ProductDetail = () => {
   //Si por alguna razon el producto no existe (Error 404)
   if (!product) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-core-bg">
-        <h2 className="text-2xl font-bold text-gray-800">
+      <div className="flex flex-col items-center justify-center h-screen bg-core-bg dark:bg-black">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
           Producto no encontrado
         </h2>
         <Link
           to="/"
-          className="mt-4 text-core-blue hover:text-core-cyan underline font-semibold"
+          className="mt-4 text-core-blue dark:text-gray-100 hover:text-core-cyan underline font-semibold"
         >
           Volver al catálogo
         </Link>
@@ -70,17 +70,17 @@ export const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-core-bg py-7 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-core-bg dark:bg-black py-7 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Botón para regresar al catálogo */}
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center text-gray-500 hover:text-core-blue transition-colors mb-1 md:mb-8 font-semibold cursor-pointer"
+          className="inline-flex items-center text-gray-500 dark:text-gray-100 dark:hover:text-core-cyan hover:text-core-blue transition-colors mb-1 md:mb-8 font-semibold cursor-pointer"
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
           Volver
         </button>
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+        <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
           {/* Lado izquierdo: la foto gigante */}
           <div className="md:w-1/2 bg-gray-50 p-1 md:p-6 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-100">
             <img
@@ -94,16 +94,16 @@ export const ProductDetail = () => {
             <div className="uppercase tracking-wide text-sm text-core-cyan font-bold mb-2">
               {product.category.replace("-", " ")}
             </div>
-            <h1 className="text-2xl md:text-4xl font-extrabold text-core-text mb-4">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-core-text dark:text-gray-100 mb-4">
               {product.title}
             </h1>
-            <p className="text-lg text-gray-500 mb-8 leading-relaxed">
+            <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
               {product.description}
             </p>
 
             <div className="mt-auto">
               <div className="flex items-center justify-between mb-8">
-                <span className="text-3xl md:text-5xl font-extrabold text-core-blue">
+                <span className="text-3xl md:text-5xl font-extrabold text-core-blue dark:text-white">
                   ${product.price}
                 </span>
                 <span className="bg-green-100 text-green-800 text-sm font-bold px-4 py-2 rounded-full">

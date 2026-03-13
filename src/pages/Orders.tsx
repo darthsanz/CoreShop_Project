@@ -14,14 +14,14 @@ export const Orders = () => {
   //pantalla vacia si no ha comprado nada
   if (myOrders.length === 0) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-core-bg px-4 animate-fade-in">
-        <div className="bg-white p-8 rounded-full shadow-sm mb-6">
-          <Package className="h-20 w-20 text-gray-300" />
+      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-core-bg dark:bg-gray-950 px-4 animate-fade-in">
+        <div className="bg-white dark:bg-gray-900 p-8 rounded-full shadow-sm mb-6">
+          <Package className="h-20 w-20 text-gray-300 dark:text-gray-50" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
           Aún no tienes compras
         </h2>
-        <p className="text-gray-500 mb-8 text-center max-w-md">
+        <p className="text-gray-500 dark:text-gray-100 mb-8 text-center max-w-md">
           Tu historial está vacio. ¡Descubre nuestro catálogo y haz tu primer
           pedido!
         </p>
@@ -37,11 +37,11 @@ export const Orders = () => {
 
   //PANTALLA CON HISTORIAL
   return (
-    <div className="min-h-screen bg-core-bg py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-core-bg dark:bg-gray-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <Link
           to="/"
-          className="inline-flex items-center text-gray-500 hover:text-core-blue transition-colors mb-8 font-semibold"
+          className="inline-flex items-center text-gray-500 dark:text-gray-100 hover:text-core-blue transition-colors mb-8 font-semibold"
         >
           <ArrowLeft className="h-5 w-5" />
           Volver a la tienda
@@ -49,7 +49,7 @@ export const Orders = () => {
 
         <div className="flex items-center gap-3 mb-8">
           <ShoppingBag className="h-8 w-8 text-core-blue" />
-          <h1 className="text-3xl font-extrabold text-core-text">
+          <h1 className="text-3xl font-extrabold text-core-text dark:text-gray-100">
             Mis compras
           </h1>
         </div>
@@ -58,12 +58,12 @@ export const Orders = () => {
           {myOrders.map((order) => (
             <div
               key={order.id}
-              className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow"
+              className="bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-md transition-shadow"
             >
               {/* Encabezado del ticket */}
-              <div className="bg-gray-50 p-6 border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-betweensss gap-4">
+              <div className="bg-gray-50 dark:bg-gray-800 p-6 border border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center justify-betweensss gap-4">
                 <div>
-                  <p className="text-sm font-semibold text-gray-500 mb-1 flex items-center gap-2">
+                  <p className="text-sm font-semibold text-gray-500 dark:text-gray-200 mb-1 flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     {new Date(order.date).toLocaleDateString("es-MX", {
                       year: "numeric",
@@ -78,10 +78,10 @@ export const Orders = () => {
                   </p>
                 </div>
                 <div className="text-left sm:text-right">
-                  <p className="text-sm font-semibold text-gray-500">
+                  <p className="text-sm font-semibold text-gray-500 dark:text-gray-200">
                     Total pagado
                   </p>
-                  <p className="text-2xl font-extrabold text-core-blue">
+                  <p className="text-2xl font-extrabold text-core-blue dark:text-core-cyan">
                     ${order.total.toFixed(2)}
                   </p>
                 </div>
@@ -102,16 +102,16 @@ export const Orders = () => {
                       <div className="grow">
                         <Link
                           to={`/producto/${item.id}`}
-                          className="font-bold text-gray-800 hover:text-core-blue transition-colors line-clamp-1"
+                          className="font-bold text-gray-800 dark:text-gray-100 hover:text-core-blue transition-colors line-clamp-1"
                         >
                           {item.title}
                         </Link>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-200">
                           Cantidad:{item.quantity}
                         </p>
                       </div>
                       <div className="text-right shrink-0">
-                        <p className="font-bold text-gray-700">
+                        <p className="font-bold text-gray-700 dark:text-gray-50">
                           ${(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>

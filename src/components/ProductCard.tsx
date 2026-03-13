@@ -35,11 +35,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     addToCart(product); //1.le avisa al gerente
     //2.lanza el mensaje visual
     toast.success(`${product.title} agregado al carrito`, {
-      style: {
-        background: "#1E293B",
-        color: "#fff",
-        borderRadius: "10px",
-      },
       iconTheme: {
         primary: "#00B4D8",
         secondary: "#fff",
@@ -48,19 +43,19 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-row sm:flex-col group">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-row sm:flex-col group">
       {/* Envolvemos en un nuevo div la imagen y el corazon */}
       <div className="relative w-2/5 sm:w-full sm:h-48 bg-gray-50 shrink-0 flex items-center justify-center">
         <button
           onClick={(e) => {
             e.preventDefault(); //evita que al darle clic al corazon nos mande a detalles
             toggleFavorite(product);
-            toast.success(
+            toast(
               isFavorite ? "Eliminado de favoritos" : "Agregado a favoritos",
               { icon: isFavorite ? "💔" : "❤️" },
             );
           }}
-          className="absolute top-2 right-2 z-20 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:scale-110 transition-transform duration-200"
+          className="absolute top-2 right-2 z-20 p-2 bg-white/80 dark:bg-gray-800 backdrop-blur-sm rounded-full shadow-sm hover:scale-110 transition-transform duration-200"
         >
           <Heart
             className={`h-5 w-5 transition-colors duration-300 ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"}`}
@@ -86,17 +81,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           to={`/producto/${product.id}`}
           className="cursor-pointer mb-2 sm:mb-0"
         >
-          <h3 className="text-sm sm:text-lg font-bold text-core-text line-clamp-2 sm:line-clamp-1 group-hover:text-core-blue transition-colors">
+          <h3 className="text-sm sm:text-lg font-bold text-core-text dark:text-gray-100 line-clamp-2 sm:line-clamp-1 group-hover:text-core-blue transition-colors">
             {product.title}
           </h3>
-          <p className="hidden sm:block text-sm text-gray-500 mt-1 line-clamp-2">
+          <p className="hidden sm:block text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2 mb-2">
             {product.description}
           </p>
         </Link>
 
         {/* Precio y Botón */}
-        <div className="mt-auto pt-2 sm:pt-4 flex flex-wrap sm:flex-nowrap items-center justify-between border-t border-transparent sm:border-gray-50 gap-2">
-          <span className="text-base sm:text-xl font-extrabold text-core-blue">
+        <div className="mt-auto pt-2 sm:pt-4 flex flex-wrap sm:flex-nowrap items-center justify-between border-t dark:border-t-gray-600 border-transparent sm:border-gray-50 gap-2">
+          <span className="text-base sm:text-xl font-extrabold text-core-blue dark:text-white">
             ${product.price}
           </span>
           <button
