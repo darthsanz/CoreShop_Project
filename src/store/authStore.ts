@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider } from "../lib/firebase";
 import toast from "react-hot-toast";
+import i18next from "i18next";
 
 interface AuthState {
   user: User | null; //Aqui guardaremos la foto, nombre y correo.
@@ -31,10 +32,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   loginWithGoogle: async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      toast.success("¡Bienvenido a Coreshop!");
+      toast.success(i18next.t("auth_login.login_With_Google.login"));
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
-      toast.error("Hubo un error al iniciar sesión");
+      toast.error(i18next.t("auth_login.login_With_Google.login_error"));
     }
   },
 
@@ -42,10 +43,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   loginWithEmail: async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Bienvenido de vuelta!");
+      toast.success(i18next.t("auth_login.login_With_Email.login"));
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Correo o contraseña incorrectos");
+      toast.error(i18next.t("auth_login.login_With_Email.login_error"));
     }
   },
 
@@ -53,18 +54,18 @@ export const useAuthStore = create<AuthState>((set) => ({
   registerWithEmail: async (email, password) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      toast.success("¡Cuenta creada con exito!");
+      toast.success(i18next.t("auth_login.register_With_Email.success_message"));
     } catch (error) {
       console.error("Error:", error);
       //Le damos un molde temporal al error solo para esta parte
       const firebaseError = error as { code: string };
       //Firebase nos avisa si la contraseña es muy debil o el correo ya existe
       if (firebaseError.code === "auth/weak-password") {
-        toast.error("La contraseña debe tener al menos 6 caracteres");
+        toast.error(i18next.t("auth_login.register_With_Email.password_error"));
       } else if (firebaseError.code === "auth/email-already-in-use") {
-        toast.error("Este correo ya está registrado");
+        toast.error(i18next.t("auth_login.register_With_Email.email_in_use"));
       } else {
-        toast.error("Hubo un error al registrarse");
+        toast.error(i18next.t("auth_login.register_With_Email.sign_up_error"));
       }
     }
   },
@@ -73,9 +74,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     try {
       await signOut(auth);
-      toast.success("Sesión cerrada");
+      toast.success(i18next.t("auth_login.logout.logout"));
     } catch (error) {
       console.error("Error al cerrar sesión", error);
+      toast.error(i18next.t("auth_login.logout.logout_error"));
     }
   },
 }));

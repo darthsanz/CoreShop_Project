@@ -4,12 +4,16 @@ import { getProducts } from "../services/product";
 import { useSearchStore } from "../store/searchStore";
 import type { Product } from "../types";
 import { SearchX } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Home = () => {
+  //traemos la funcion t para traducir
+  const { t } = useTranslation();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   //Aqui usamos los que el usuario escribio en la barra de busqueda
   const searchTerm = useSearchStore((state) => state.searchTerm);
   const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
@@ -31,7 +35,7 @@ export const Home = () => {
   //Extraemos las cateogiras unicas de los productos que nos llega
   //Si llegan 10 laps y 10 celulares, esto solo guardara laptops y smartphones
   const categories = [
-    "Todas",
+    "all",
     ...Array.from(new Set(products.map((p) => p.category))),
   ];
 
@@ -42,7 +46,7 @@ export const Home = () => {
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesCategory =
-      selectedCategory === "Todas" || product.category === selectedCategory;
+      selectedCategory === "all" || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -51,7 +55,7 @@ export const Home = () => {
       {/* Título y Píldoras de Categorías (Ya no hay barra de búsqueda aquí) */}
       <div className="flex flex-col mb-8">
         <h2 className="text-3xl font-extrabold text-core-text mb-6 dark:text-gray-100">
-          Explora nuestro catálogo
+          {t("home.explore_catalog")}
         </h2>
 
         <div className="flex overflow-x-auto pb-4 pt-1 pl-1 gap-3 hide-scrollbar">
@@ -65,8 +69,12 @@ export const Home = () => {
                   : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 ring-0 ring-transparent"
               }`}
             >
-              {category.charAt(0).toUpperCase() +
-                category.slice(1).replace("-", " ")}
+              {t(`categories.${category}`, {
+                // Si la categoría no está en nuestro diccionario, le aplicamos este formato por defecto:
+                defaultValue:
+                  category.charAt(0).toUpperCase() +
+                  category.slice(1).replace("-", " "),
+              })}
             </button>
           ))}
         </div>
@@ -75,7 +83,7 @@ export const Home = () => {
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <p className="text-xl text-core-blue dark:text-gray-100 font-semibold animate-pulse">
-            Cargando productos increíbles...
+            {t("home.loading")} {/* Cargando productos... */}
           </p>
         </div>
       ) : (
@@ -89,23 +97,23 @@ export const Home = () => {
                   <SearchX className="h-16 w-16 text-gray-400 dark:text-gray-400" />
                 </div>
               </div>
-
+              {/* Sin resultados */}
               <h3 className="text-2xl font-bold text-core-text dark:text-white mb-2 transition-colors duration-300">
-                Sin resultados
+                {t("home.no_results")}
               </h3>
-
+              {/* No encontramos ningun... */}
               <p className="text-lg text-gray-500 dark:text-gray-400 font-medium mb-8">
-                No encontramos ningún producto que coincida con tu búsqueda.
+                {t("home.no_results_desc")}
               </p>
-
               <button
                 onClick={() => {
                   setSearchTerm(""); // Aquí se usa setSearchTerm por fin
-                  setSelectedCategory("Todas");
+                  setSelectedCategory("all");
                 }}
                 className="px-6 py-3 bg-core-blue dark:bg-cyan-600 text-white rounded-xl font-bold hover:bg-core-cyan dark:hover:bg-cyan-500 transition-colors shadow-lg hover:shadow-core-cyan/50"
               >
-                Limpiar búsqueda
+                {/* limpiar filtros */}
+                {t("home.clear_filters")}
               </button>
             </div>
           ) : (

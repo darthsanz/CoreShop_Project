@@ -16,8 +16,12 @@ import Logo_icon from "../assets/Core_Icon.png";
 import type React from "react";
 import { useAuthStore } from "../store/authStore";
 import { useThemeStore } from "../store/themeStore";
+import { useTranslation } from "react-i18next";
 
 export const Navbar = () => {
+  //extraemos la funcion 't' (para traduccir ) y el objeto 'i18n' (para cambiar de idioma)
+  const { t, i18n } = useTranslation();
+
   //usamos el intercomunicador, le decimos al gerente que nos diga solo lo que hay en el carrito
   const cart = useCartStore((state) => state.cart);
   const openCart = useCartStore((state) => state.openCart);
@@ -80,7 +84,7 @@ export const Navbar = () => {
             <div className="relative group">
               <input
                 type="text"
-                placeholder="Buscar en CoreShop"
+                placeholder={t("nav.search_placeholder")}
                 value={searchTerm}
                 onChange={handleSearch}
                 className="w-full pl-11 pr-4 py-2.5 rounded-full border border-gray-300 dark:border-gray-900 bg-gray-50 dark:bg-gray-600 focus:bg-white dark:focus:bg-gray-600 focus:border-core-blue dark:focus:border-white focus:ring-2 focus:ring-core-blue/20 outline-none transition-all shadow-inner group-hover:shadow-md"
@@ -108,7 +112,7 @@ export const Navbar = () => {
               {/* Nombre, solo visibles apartir de pantallas medianas */}
               <div className="hidden md:block text-sm text-left mr-2">
                 <p className="text-gray-500 dark:text-gray-300 text-xs leading-none">
-                  Hola,{" "}
+                  {t("nav.greeting")},{" "}
                 </p>
                 <p className="font-bold text-gray-800 dark:text-white line-clamp-1 max-w-25 leading-tight mt-0.5]">
                   {user.displayName || user.email?.split("@"[0])}
@@ -124,7 +128,7 @@ export const Navbar = () => {
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-white  hover:bg-gray-50 dark:hover:bg-blue-600/80 hover:text-core-blue dark:hover:text-gray-200 font-bold rounded-xl transition-colors"
                   >
                     <Package className="h-4 w-4" />
-                    Mis compras
+                    {t("nav.my_orders")}
                   </Link>
 
                   {/* Divisor */}
@@ -136,7 +140,7 @@ export const Navbar = () => {
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-white hover:bg-red-50 dark:hover:bg-red-600/80 font-bold rounded-xl transition-colors"
                   >
                     <LogOut className="h-4 w-4" />
-                    Salir
+                    {t("nav.logout")}
                   </button>
                 </div>
               </div>
@@ -149,13 +153,23 @@ export const Navbar = () => {
             >
               <User className="h-7 w-7 sm:h-6 sm:w-6" />
               <span className="hidden md:inline text-sm font-bold">
-                Ingresar
+                {t("nav.login")}
               </span>
             </Link>
           )}
 
           {/* Divisor visual entre perfil y los iconos */}
           <div className="hidden sm:block h-6 w-px bg-gray-200 mx-1"></div>
+
+          {/* EL BOTÓN DE IDIOMA */}
+          <button
+            onClick={() =>
+              i18n.changeLanguage(i18n.language === "es" ? "en" : "es")
+            }
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 font-bold text-sm uppercase"
+          >
+            {i18n.language}
+          </button>
 
           <div className="flex items-center gap-2 shrink-0">
             <Link
@@ -170,6 +184,7 @@ export const Navbar = () => {
               )}
             </Link>
           </div>
+
           {/* Interruptor del modo oscuro */}
           <button
             onClick={toggleTheme}

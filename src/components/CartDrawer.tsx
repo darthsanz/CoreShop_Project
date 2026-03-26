@@ -1,8 +1,10 @@
 import { X, Trash2 } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const CartDrawer = () => {
+  const { t } = useTranslation();
   //Traemos toda la oficina del gerente que necesitamospara el carrito
   const { cart, isCartOpen, closeCart, removeFromCart, clearCart } =
     useCartStore();
@@ -33,7 +35,7 @@ export const CartDrawer = () => {
           {/* Cabecera del panel */}
           <div className="flex justify-between items-center p-5 border-b border-gray-100 dark:border-gray-600">
             <h2 className="text-2xl font-bold text-core-blue dark:text-gray-100">
-              Tu Carrito
+              {t('cart.title')}
             </h2>
             <button
               onClick={closeCart}
@@ -46,7 +48,7 @@ export const CartDrawer = () => {
           <div className="flex-1 overflow-y-auto p-5">
             {cart.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-gray-400 dark:text-gray-100 space-y-4">
-                <p className="text-lg font-medium">Tu Carrito está vacío</p>
+                <p className="text-lg font-medium">{t('cart.empty')}</p>
               </div>
             ) : (
               <ul className="space-y-6">
@@ -84,7 +86,7 @@ export const CartDrawer = () => {
             <div className="border-t border-gray-100 dark:border-gray-600 p-6 bg-gray-50 dark:bg-gray-900">
               <div className="flex justify-between items-center mb-6">
                 <span className="text-lg font-bold text-gray-600 dark:text-gray-300">
-                  Total a pagar:
+                  {t('cart.total')}
                 </span>
                 <span className="text-3xl font-extrabold text-core-blue dark:text-cyan-300">
                   ${totalAmount.toFixed(2)}
@@ -94,13 +96,13 @@ export const CartDrawer = () => {
                 onClick={handleCheckoutClick}
                 className="w-full bg-core-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-core-cyan transition-color shadow-lg shadow-core-blue/30 cursor-pointer"
               >
-                Proceder al pago
+                {t('cart.checkout')}
               </button>
               <button
                 onClick={clearCart}
                 className="w-full mt-4 text-sm font-semibold text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
               >
-                Vaciar carrito
+                {t('cart.clear_cart')}
               </button>
             </div>
           )}

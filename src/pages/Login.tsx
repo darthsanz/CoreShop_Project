@@ -2,8 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react"; //LogIn
 import { useAuthStore } from "../store/authStore";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const Login = () => {
+  const { t } = useTranslation();
+
   const { loginWithGoogle, loginWithEmail, registerWithEmail, user } =
     useAuthStore();
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ export const Login = () => {
     <div className="min-h-screen bg-core-bg dark:bg-gray-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-50">
-          Inicia sesión en tu cuenta
+          {t("auth_login.title")}
         </h2>
       </div>
 
@@ -53,7 +56,7 @@ export const Login = () => {
                 alt="Google"
                 className="w-5 h-5"
               />
-              Continuar con Google
+              {t("auth_login.continue_with_google")}
             </button>
           </div>
           <div className="mt-6">
@@ -63,7 +66,7 @@ export const Login = () => {
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">
-                  O usa tu correo electrónico
+                  {t("auth_login.or_email")}
                 </span>
               </div>
             </div>
@@ -72,20 +75,20 @@ export const Login = () => {
           <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">
-                Correo Electrónico
+                {t("auth_login.form.email")}
               </label>
               <input
                 required
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@correo.com"
+                placeholder={t("auth_login.placeholder.example_email")}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all"
               />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">
-                Contraseña
+                {t("auth_login.form.password")}
               </label>
               <input
                 required
@@ -106,9 +109,9 @@ export const Login = () => {
               {isLoading ? (
                 <Loader2 className="animate-spin h-5 w-5" />
               ) : isRegistering ? (
-                "Registrarse"
+                t("auth_login.button_create_account")
               ) : (
-                "Entrar"
+                t("auth_login.button_login")
               )}
             </button>
           </form>
@@ -119,8 +122,8 @@ export const Login = () => {
               className="text-sm font-semibold text-core-blue dark:text-gray-100 hover:text-core-cyan transition-colors"
             >
               {isRegistering
-                ? "¿Ya tienes cuenta? Inicia sesión"
-                : "¿No tienes cuenta? Registrate"}
+                ? t("auth_login.already_have_account")
+                : t("auth_login.create_account")}
             </button>
           </div>
 
@@ -130,7 +133,7 @@ export const Login = () => {
               className="inline-flex items-center text-sm font-semibold text-core-blue dark:text-gray-100 hover:text-core-cyan transition-all"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Volver a la tienda
+              {t("common.back_to_store")}
             </Link>
           </div>
         </div>

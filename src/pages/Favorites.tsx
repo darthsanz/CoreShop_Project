@@ -3,8 +3,12 @@ import { Heart, ArrowLeft } from "lucide-react";
 import { useFavoriteStore } from "../store/favoriteStore";
 import { ProductCard } from "../components/ProductCard";
 import { useAuthStore } from "../store/authStore";
+import { useTranslation } from "react-i18next";
 
 export const Favorites = () => {
+  //Para la traduccion
+  const { t } = useTranslation();
+
   const { user } = useAuthStore();
   const currentUserId = user ? user.uid : "invitado";
 
@@ -22,17 +26,16 @@ export const Favorites = () => {
           <Heart className="h-24 w-24 text-gray-300 dark:text-gray-400" />
         </div>
         <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-          Tu lista de deseos está vacía 💔
+          {t("favorites.no_favorites.title")}
         </h2>
         <p className="text-gray-500 dark:text-gray-300 mb-8 text-center max-w-md">
-          ¡Explora nuestro catálogo y enamórate de nuestros increíbles
-          productos!
+          {t("favorites.no_favorites.desc")}
         </p>
         <Link
           to="/"
           className="bg-core-blue text-white py-4 px-8 rounded-xl font-bold hover:bg-core-cyan transition-colors shadow-lg hover:shadow-core-cyan/50"
         >
-          Descubrir productos
+          {t("favorites.discover_products")}
         </Link>
       </div>
     );
@@ -45,12 +48,12 @@ export const Favorites = () => {
           className="inline-flex items-center text-gray-500 dark:text-gray-100 hover:text-core-blue dark:hover:text-core-cyan transition-colors mb-8 font-semibold"
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
-          Volver a la tienda
+          {t('common.back_to_store')}
         </Link>
         <div className="flex items-center gap-3 mb-8">
           <Heart className="h-8 w-8 text-red-500 fill-red-500" />
           <h1 className="text-3xl font-extrabold text-core-text dark:text-gray-100">
-            Tus Favoritos
+            {t('favorites.title')}
           </h1>
         </div>
         {/* Reutilizamos el grid y las tarjetas */}

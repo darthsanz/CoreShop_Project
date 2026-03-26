@@ -10,10 +10,13 @@ import { useCartStore } from "../store/cartStore";
 import React, { useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import { useOrderStore } from "../store/orderStore";
+import { useTranslation } from "react-i18next";
 // import toast from "react-hot-toast";
 // import { resolve } from "path";
 
 export const Checkout = () => {
+  const { t } = useTranslation();
+
   const { cart, clearCart } = useCartStore();
 
   //traemos al usuario actual y la funcion para guardar ordenes
@@ -57,17 +60,16 @@ export const Checkout = () => {
         <div className="bg-white dark:bg-gray-900 p-10 rounded-3xl shadow-xl max-w-lg w-full text-center">
           <CheckCircle className="h-24 w-24 text-green-500 mx-auto mb-6 animate-bounce" />
           <h1 className="text-4xl font-extrabold text-core-text dark:text-gray-100 mb-4">
-            ¡Pago Exitoso!
+            {t("checkout.success_title")}
           </h1>
           <p className="text-gray-500 dark:text-gray-200 mb-8 text-lg">
-            Tu pedido ha sido confirmado. Te enviaremos los detalles a tu correo
-            electrónico.
+            {t("checkout.success_desc")}
           </p>
           <Link
             to="/"
             className="inline-block w-full bg-core-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-core-cyan transition-colors shadow-lg"
           >
-            Seguir Comprando
+            {t("checkout.continue_shopping")}
           </Link>
         </div>
       </div>
@@ -82,16 +84,16 @@ export const Checkout = () => {
           <ShoppingCart className="h-24 w-24 text-gray-300 dark:text-gray-400" />
         </div>
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-          Tu carrito está vacio
+          {t('cart.empty')}
         </h2>
         <p className="text-gray-500 dark:text-white mb-8 text-center">
-          Agrega algunos productos antes de proceder al pago
+          {t('cart.empty_desc')}
         </p>
         <Link
           to="/"
           className="bg-core-blue text-white px-6 py-3 rounded-xl font-bold hover:bg-core-cyan shadow-lg hover:shadow-core-cyan/50 transition-colors"
         >
-          Volver a la tienda
+          {t('common.back_to_store')}
         </Link>
       </div>
     );
@@ -105,14 +107,14 @@ export const Checkout = () => {
           className="inline-flex items-center text-gray-500 dark:text-gray-100 hover:text-core-blue dark:hover:text-core-cyan transition-colors mb-8 font-semibold"
         >
           <ArrowLeft className="h-5 w-5 mr-2"></ArrowLeft>
-          Volver a la tienda
+          {t("common.back_to_store")}
         </Link>
 
         <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl overflow-hidden p-8">
           <div className="flex items-center gap-3 mb-8 border-b border-gray-100 dark:border-gray-600 p-6">
             <CreditCard className="h-8 w-8 text-core-blue dark:text-core-cyan" />
             <h1 className="text-3xl font-extrabold text-core-text dark:text-gray-100">
-              Finalizar compra
+              {t("checkout.title")}
             </h1>
           </div>
 
@@ -120,7 +122,7 @@ export const Checkout = () => {
             {/* Lado izquierdo:Formulario, en construccion */}
             <div>
               <h2 className="text-xl font-bold text-gray-500 dark:text-gray-100 mb-4">
-                Datos de Envío y Pago
+                {t("checkout.shipping_info")}
               </h2>
               {/* Al enviar el formulario se ejecuta handlePayment */}
               <form
@@ -131,31 +133,31 @@ export const Checkout = () => {
                 {/* Campos requeridos simples */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-50 mb-1">
-                    Nombre Completo
+                    {t("checkout.form.full_name")}
                   </label>
                   <input
                     required
                     type="text"
-                    placeholder="Ej. Juan Pérez"
+                    placeholder={t("checkout.form.placeholders.full_name")}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-50 mb-1">
-                    Dirección de Envio
+                    {t("checkout.form.address")}
                   </label>
                   <input
                     required
                     type="text"
-                    placeholder="Calle, Número, Ciudad"
+                    placeholder={t("checkout.form.placeholders.address")}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-core-blue focus:ring-2 focus:ring-core-blue/20 outline-none transition-all "
                   />
                 </div>
 
                 <div className="pt-4 border-t border-gray-100 dark:border-gray-600">
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">
-                    Número de Tarjeta (Ficticio)
+                    {t("checkout.form.card_number")}
                   </label>
                   <input
                     required
@@ -168,7 +170,7 @@ export const Checkout = () => {
                 <div className="flex gap-4">
                   <div className="w-1/2">
                     <label className="block text-sm font-semibold text-gray-700 dark:text-gray-50 mb-1">
-                      Fecha (MM/AA)
+                      {t("checkout.form.card_date")}
                     </label>
                     <input
                       required
@@ -197,7 +199,7 @@ export const Checkout = () => {
             {/* Lado derecho resumen de la orden             */}
             <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl flex flex-col h-full">
               <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-                Resumen de tu orden
+                {t("checkout.order_summary.title")}
               </h2>
               <ul className="space-y-4 mb-6 max-h-64 overflow-y-auto pr-2 hide-scrollbar">
                 {cart.map((item) => (
@@ -215,14 +217,16 @@ export const Checkout = () => {
                         <p className="font-semibold text-gray-800 dark:text-gray-200 line-clamp-1">
                           {item.title}
                         </p>
-                        <p className="text-gray-500 dark:text-gray-100">
-                          Cant: {item.quantity}
-                        </p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-gray-500 dark:text-gray-100">
+                            {t("checkout.order_summary.qty")} {item.quantity}
+                          </p>
+                          <p className="font-bold text-core-blue dark:text-core-cyan">
+                            ${(item.price * item.quantity).toFixed(2)}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <p className="font-bold text-core-blue dark:text-white">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </p>
                   </li>
                 ))}
               </ul>
@@ -230,25 +234,25 @@ export const Checkout = () => {
               <div className="border-t border-gray-200 dark:border-gray-600 pt-4 mt-auto">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-semibold text-gray-500 dark:text-gray-200">
-                    Subtotal
+                    {t("common.subtotal")}
                   </span>
-                  <span className="font-extrabold text-gray-500 dark:text-white">
+                  <span className="font-extrabold text-gray-500 dark:text-core-cyan">
                     ${totalAmount.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-gray-500 dark:text-gray-200 font-semibold">
-                    Envío
+                    {t("common.shipping")}
                   </span>
                   <span className="font-bold text-gray-500 dark:text-white">
-                    ¡Gratis!
+                    {t("common.free")}
                   </span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-bold text-gray-600 dark:text-gray-200">
-                    Total a pagar:
+                    {t("common.total_to_pay")}
                   </span>
-                  <span className="text-2xl font-extrabold text-core-blue dark:text-white">
+                  <span className="text-2xl font-extrabold text-core-blue dark:text-core-cyan">
                     ${totalAmount.toFixed(2)}
                   </span>
                 </div>
@@ -262,10 +266,10 @@ export const Checkout = () => {
                   {isProcessing ? (
                     <>
                       <Loader2 className="animate-spin h-6 w-6 mr-3" />
-                      Procesando pago...
+                      {t("common.processing_payment")}...
                     </>
                   ) : (
-                    `Pagar $${totalAmount.toFixed(2)}`
+                    `${t("common.pay")} $${totalAmount.toFixed(2)}`
                   )}
                 </button>
               </div>

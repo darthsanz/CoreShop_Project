@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { Package, ArrowLeft, Calendar, ShoppingBag } from "lucide-react";
 import { useOrderStore } from "../store/orderStore";
 import { useAuthStore } from "../store/authStore";
+import { useTranslation } from "react-i18next";
 
 export const Orders = () => {
+  const { t, i18n } = useTranslation();
+
   const { orders } = useOrderStore();
   const { user } = useAuthStore();
 
@@ -19,17 +22,16 @@ export const Orders = () => {
           <Package className="h-20 w-20 text-gray-300 dark:text-gray-50" />
         </div>
         <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-          Aún no tienes compras
+          {t('order_history.no_orders.title')}
         </h2>
         <p className="text-gray-500 dark:text-gray-100 mb-8 text-center max-w-md">
-          Tu historial está vacio. ¡Descubre nuestro catálogo y haz tu primer
-          pedido!
+       {t('order_history.no_orders.desc')}
         </p>
         <Link
           to="/"
           className="bg-core-blue text-white px-8 py-3 rounded-xl font-bold hover:bg-core-cyan transition-colors shadow-lg"
         >
-          Ir a la tienda
+          {t('common.go_to_store')}
         </Link>
       </div>
     );
@@ -44,13 +46,13 @@ export const Orders = () => {
           className="inline-flex items-center text-gray-500 dark:text-gray-100 hover:text-core-blue transition-colors mb-8 font-semibold"
         >
           <ArrowLeft className="h-5 w-5" />
-          Volver a la tienda
+          {t("common.back_to_store")}
         </Link>
 
         <div className="flex items-center gap-3 mb-8">
           <ShoppingBag className="h-8 w-8 text-core-blue" />
           <h1 className="text-3xl font-extrabold text-core-text dark:text-gray-100">
-            Mis compras
+            {t("order_history.title")}
           </h1>
         </div>
 
@@ -61,11 +63,12 @@ export const Orders = () => {
               className="bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-md transition-shadow"
             >
               {/* Encabezado del ticket */}
-              <div className="bg-gray-50 dark:bg-gray-800 p-6 border border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center justify-betweensss gap-4">
+               <div className="bg-gray-50 dark:bg-gray-800 p-6 border border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <p className="text-sm font-semibold text-gray-500 dark:text-gray-200 mb-1 flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    {new Date(order.date).toLocaleDateString("es-MX", {
+                    {/* Cambiamos es-MX por i18n para pasarle el idioma */}
+                    {new Date(order.date).toLocaleDateString(i18n.language, {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
@@ -79,7 +82,7 @@ export const Orders = () => {
                 </div>
                 <div className="text-left sm:text-right">
                   <p className="text-sm font-semibold text-gray-500 dark:text-gray-200">
-                    Total pagado
+                    {t("order_history.total_paid")}
                   </p>
                   <p className="text-2xl font-extrabold text-core-blue dark:text-core-cyan">
                     ${order.total.toFixed(2)}
@@ -107,7 +110,7 @@ export const Orders = () => {
                           {item.title}
                         </Link>
                         <p className="text-sm text-gray-500 dark:text-gray-200">
-                          Cantidad:{item.quantity}
+                          {t('order_history.quantity')}:{item.quantity}
                         </p>
                       </div>
                       <div className="text-right shrink-0">
