@@ -19,23 +19,32 @@ const App = () => {
 
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
+  // 1. EFECTO DEL TEMA Y SAFARI (Solo reacciona a isDarkMode)
   useEffect(() => {
+    // A. Cambiamos la clase HTML general
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+
+    // B. Cambiamos el meta-tag para Safari
+    const currentColor = isDarkMode ? "#111827" : "#d1d5db"; // gris-900 : gris-300
+    const metaThemeColor = document.querySelector("meta[name='theme-color']");
+    
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute("content", currentColor);
+    }
+
+    // C. EL TRUCO PARA IOS: Forzamos al body a cambiar de color por código
+    // Esto obliga a Safari a repintar la pantalla al instante sin esperar al carrito
+    document.body.style.backgroundColor = currentColor;
+    
   }, [isDarkMode]);
 
+
+  // 2. EFECTO DE FIREBASE (Solo corre al cargar la app por primera vez)      
   useEffect(() => {
-    const metaThemeColor = document.querySelector("meta[name='theme-color']");
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute(
-        "content",
-        isDarkMode ? "#111827" : "#d1d5db",
-      );
-    }
-      
     //onAuthStateChanged es un espia de firebase que avisa cuando alguien se loguea o desloguea
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -43,7 +52,7 @@ const App = () => {
     });
     //Limpiamos el espia si el componente se destruye
     return () => unsubscribe();
-  }, [setUser, setLoading, isDarkMode]);
+  }, [setUser, setLoading]);
 
   return (
     // BrowserRouter es el "vigilante" que observa la URL del navegador
