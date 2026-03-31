@@ -36,7 +36,7 @@ const App = () => {
       metaThemeColor.setAttribute("content", currentColor);
     }
 
-    // C. EL TRUCO PARA IOS: Forzamos al body a cambiar de color por código
+    // C.PARA IOS: Forzamos al body a cambiar de color por código
     // Esto obliga a Safari a repintar la pantalla al instante sin esperar al carrito
     document.body.style.backgroundColor = currentColor;
     

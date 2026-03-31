@@ -16,6 +16,8 @@ const resources = {
         back: "Volver",
         stock: "Stock",
         available: "Disponibles",
+        added_to_favorites: "Agregado a favoritos",
+        removed_from_favorites: "Eliminado de favoritos",
         added_to_cart: "Agregado al carrito",
         back_to_store: "Volver a la Tienda",
         subtotal: "Subtotal",
