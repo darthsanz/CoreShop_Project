@@ -29,7 +29,7 @@ const App = () => {
     }
 
     // B. Cambiamos el meta-tag para Safari
-    const currentColor = isDarkMode ? "#111827" : "#d1d5db"; // gris-900 : gris-300
+    const currentColor = isDarkMode ? "#030712" : "#f8fafc"; 
     const metaThemeColor = document.querySelector("meta[name='theme-color']");
     
     if (metaThemeColor) {
