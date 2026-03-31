@@ -28,6 +28,14 @@ const App = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
+    const metaThemeColor = document.querySelector("meta[name='theme-color']");
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute(
+        "content",
+        isDarkMode ? "#111827" : "#d1d5db",
+      );
+    }
+      
     //onAuthStateChanged es un espia de firebase que avisa cuando alguien se loguea o desloguea
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -35,7 +43,7 @@ const App = () => {
     });
     //Limpiamos el espia si el componente se destruye
     return () => unsubscribe();
-  }, [setUser, setLoading]);
+  }, [setUser, setLoading, isDarkMode]);
 
   return (
     // BrowserRouter es el "vigilante" que observa la URL del navegador

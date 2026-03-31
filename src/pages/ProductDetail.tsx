@@ -77,7 +77,7 @@ export const ProductDetail = () => {
         {/* Botón para regresar al catálogo */}
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center text-gray-500 dark:text-gray-100 dark:hover:text-core-cyan hover:text-core-blue transition-colors mb-1 md:mb-8 font-semibold cursor-pointer"
+          className="inline-flex items-center text-gray-500 dark:text-gray-100 dark:hover:text-core-cyan hover:text-core-blue transition-colors mb-8 md:mb-8 font-semibold cursor-pointer"
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
           {t("common.back")}
@@ -108,11 +108,11 @@ export const ProductDetail = () => {
             </p>
 
             <div className="mt-auto">
-              <div className="flex items-center justify-between mb-8">
-                <span className="text-3xl md:text-5xl font-extrabold text-core-blue dark:text-white">
+              <div className="flex items-center justify-between w-full mb-4">
+                <span className="text-2xl md:text-5xl font-extrabold text-core-blue dark:text-white">
                   ${product.price}
                 </span>
-                <span className="bg-green-100 text-green-800 text-sm font-bold px-4 py-2 rounded-full">
+                <span className="bg-green-100 text-green-800 text-sm font-bold px-2 py-1 rounded-full">
                  {t("common.stock")}: {product.stock} {t('common.available')}
                 </span>
               </div>

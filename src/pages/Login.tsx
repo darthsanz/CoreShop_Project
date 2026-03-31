@@ -43,8 +43,8 @@ export const Login = () => {
         </h2>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-gray-900 py-8 px-4 shadow-xl sm:rounded-3xl sm:px-10 border border-gray-100 dark:border-gray-600">
+      <div className="mt-8 mx-auto w-full max-w-md px-4 sm:px-0">
+        <div className="bg-white dark:bg-gray-900 py-8 px-4 shadow-xl rounded-3xl sm:px-10 border border-gray-100 dark:border-gray-600">
           {/* Boton de google */}
           <div className="mt-2">
             <button
