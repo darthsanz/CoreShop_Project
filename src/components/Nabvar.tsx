@@ -84,6 +84,13 @@ useEffect(() => {
     }
   };
 
+  const toggleLanguage = () => {
+    const currentBaseLanguage = i18n.language.substring(0, 2);
+
+    const nextLanguage = currentBaseLanguage === "es" ? "en" : "es";
+    i18n.changeLanguage(nextLanguage);
+  }
+
   // Extraemos el Input de búsqueda a una variable para no repetir código
   const SearchInput = (
     <div className="relative group w-full">
@@ -208,12 +215,10 @@ useEffect(() => {
 
             {/* EL BOTÓN DE IDIOMA */}
             <button
-              onClick={() =>
-                i18n.changeLanguage(i18n.language === "es" ? "en" : "es")
-              }
+              onClick={toggleLanguage}
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 font-bold text-sm uppercase"
             >
-              {i18n.language}
+              {i18n.language.substring(0,2).toUpperCase()}
             </button>
 
             <div className="flex items-center gap-2 shrink-0">
