@@ -106,7 +106,7 @@ useEffect(() => {
   );
 
   return (
-    <nav className="bg-gray-300/80 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
+    <nav className="bg-gray-300/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* === FILA PRINCIPAL === */}
         <div className="flex justify-between items-center h-16 gap-2 sm:gap-4">

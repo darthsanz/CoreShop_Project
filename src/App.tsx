@@ -19,7 +19,7 @@ const App = () => {
 
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
-  // 1. EFECTO DEL TEMA Y SAFARI (Solo reacciona a isDarkMode)
+  // 1. EFECTO DEL TEMA Y SAFARI
   useEffect(() => {
     // A. Cambiamos la clase HTML general
     if (isDarkMode) {
@@ -28,22 +28,25 @@ const App = () => {
       document.documentElement.classList.remove("dark");
     }
 
-    // B. Cambiamos el meta-tag para Safari
-    const currentColor = isDarkMode ? "#030712" : "#f8fafc"; 
-    const metaThemeColor = document.querySelector("meta[name='theme-color']");
-    
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute("content", currentColor);
+    const currentColor = isDarkMode ? "#030712" : "#f8fafc";
+
+    // B. EL TRUCO PARA SAFARI: Destruir y recrear el meta-tag
+    const oldMeta = document.querySelector("meta[name='theme-color']");
+    if (oldMeta) {
+      oldMeta.remove(); // Lo borramos por completo
     }
 
-    // C.PARA IOS: Forzamos al body a cambiar de color por código
-    // Esto obliga a Safari a repintar la pantalla al instante sin esperar al carrito
+    // Creamos uno nuevo desde cero
+    const newMeta = document.createElement("meta");
+    newMeta.name = "theme-color";
+    newMeta.content = currentColor;
+    document.head.appendChild(newMeta); // Safari lo detecta como un elemento nuevo y se repinta
+
+    // C. Forzamos al body a cambiar de color por código
     document.body.style.backgroundColor = currentColor;
-    
   }, [isDarkMode]);
 
-
-  // 2. EFECTO DE FIREBASE (Solo corre al cargar la app por primera vez)      
+  // 2. EFECTO DE FIREBASE (Solo corre al cargar la app por primera vez)
   useEffect(() => {
     //onAuthStateChanged es un espia de firebase que avisa cuando alguien se loguea o desloguea
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -100,6 +103,6 @@ const App = () => {
       </div>
     </BrowserRouter>
   );
-};
+};;
 
 export default App;
