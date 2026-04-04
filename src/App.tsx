@@ -19,31 +19,27 @@ const App = () => {
 
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
-  // 1. EFECTO DEL TEMA Y SAFARI (Solo reacciona a isDarkMode)
-  useEffect(() => {
-    // A. Cambiamos la clase HTML general
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+useEffect(() => {
+  // 1. Activar o desactivar modo oscuro en HTML para Tailwind
+  if (isDarkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 
-    // B. Cambiamos el meta-tag para Safari
-    const currentColor = isDarkMode ? "#111827" : "#d1d5db"; // gris-900 : gris-300
-    const metaThemeColor = document.querySelector("meta[name='theme-color']");
-    
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute("content", currentColor);
-    }
+  // 2. Solo para Chrome/Android: actualizamos el meta tag básico
+  const color = isDarkMode ? "#030712" : "#d1d5db";
+  let metaThemeColor = document.querySelector("meta[name='theme-color']");
 
-    // C.PARA IOS: Forzamos al body a cambiar de color por código
-    // Esto obliga a Safari a repintar la pantalla al instante sin esperar al carrito
-    document.body.style.backgroundColor = currentColor;
-    
-  }, [isDarkMode]);
+  if (!metaThemeColor) {
+    metaThemeColor = document.createElement("meta");
+    metaThemeColor.setAttribute("name", "theme-color");
+    document.head.appendChild(metaThemeColor);
+  }
+  metaThemeColor.setAttribute("content", color);
+}, [isDarkMode]);
 
-
-  // 2. EFECTO DE FIREBASE (Solo corre al cargar la app por primera vez)      
+  // 2. EFECTO DE FIREBASE (Solo corre al cargar la app por primera vez)
   useEffect(() => {
     //onAuthStateChanged es un espia de firebase que avisa cuando alguien se loguea o desloguea
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -57,7 +53,7 @@ const App = () => {
   return (
     // BrowserRouter es el "vigilante" que observa la URL del navegador
     <BrowserRouter>
-      <div className="min-h-screen bg-core-bg dark:bg-gray-950 transition-colors duration-300">
+      <div className="min-h-dvh bg-core-bg dark:bg-gray-950 transition-colors duration-300">
         {/* Estos 3 "muebles" siempre están en la pantalla, pase lo que pase */}
         <Navbar />
         <CartDrawer />
@@ -74,32 +70,33 @@ const App = () => {
             },
           }}
         />
+        <div className="pt-28 md:pt-16">
+          {/*-- Aquí ponemos las "Puertas" a las diferentes habitaciones --*/}
+          <Routes>
+            {/* Habitacion del login */}
+            <Route path="/login" element={<Login />} />
 
-        {/*-- Aquí ponemos las "Puertas" a las diferentes habitaciones --*/}
-        <Routes>
-          {/* Habitacion del login */}
-          <Route path="/login" element={<Login />} />
+            {/* Direccion de la habitacion para el catalogo(Incio)*/}
+            <Route path="/" element={<Home />} />
 
-          {/* Direccion de la habitacion para el catalogo(Incio)*/}
-          <Route path="/" element={<Home />} />
+            {/* Direccion de la habitacion de detalles de producto*/}
+            <Route path="/producto/:id" element={<ProductDetail />} />
 
-          {/* Direccion de la habitacion de detalles de producto*/}
-          <Route path="/producto/:id" element={<ProductDetail />} />
+            {/* Direccion de la habitacion de Favoritos */}
+            <Route path="/favoritos" element={<Favorites />}></Route>
 
-          {/* Direccion de la habitacion de Favoritos */}
-          <Route path="/favoritos" element={<Favorites />}></Route>
+            {/* Direccion de la habitacion del proceso de pago */}
+            <Route path="/checkout" element={<Checkout />} />
 
-          {/* Direccion de la habitacion del proceso de pago */}
-          <Route path="/checkout" element={<Checkout />} />
+            {/* Direccion de la habitacion de historial de compras(Orders) */}
+            <Route path="/mis-compras" element={<Orders />} />
 
-          {/* Direccion de la habitacion de historial de compras(Orders) */}
-          <Route path="/mis-compras" element={<Orders />} />
-
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
       </div>
     </BrowserRouter>
   );
-};
+};;
 
 export default App;

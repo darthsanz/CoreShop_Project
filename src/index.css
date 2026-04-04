@@ -12,3 +12,13 @@
   /* fuente principal */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif; 
 }
+
+html, body {
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100%;
+  /* Respeta notch del iPhone */
+  padding-top: env(safe-area-inset-top);
+}
