@@ -106,7 +106,7 @@ useEffect(() => {
   );
 
   return (
-    <nav className="bg-gray-300/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b border-gray-100 dark:border-gray-800 bg-gray-300 dark:bg-gray-900 md:bg-gray-300/80 md:dark:bg-gray-900/80 md:backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* === FILA PRINCIPAL === */}
         <div className="flex justify-between items-center h-16 gap-2 sm:gap-4">
@@ -218,7 +218,7 @@ useEffect(() => {
               onClick={toggleLanguage}
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 font-bold text-sm uppercase"
             >
-              {i18n.language.substring(0,2).toUpperCase()}
+              {i18n.language.substring(0, 2).toUpperCase()}
             </button>
 
             <div className="flex items-center gap-2 shrink-0">

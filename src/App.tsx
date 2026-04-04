@@ -19,32 +19,25 @@ const App = () => {
 
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
-  // 1. EFECTO DEL TEMA Y SAFARI
-  useEffect(() => {
-    // A. Cambiamos la clase HTML general
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+useEffect(() => {
+  // 1. Activar o desactivar modo oscuro en HTML para Tailwind
+  if (isDarkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 
-    const currentColor = isDarkMode ? "#030712" : "#f8fafc";
+  // 2. Solo para Chrome/Android: actualizamos el meta tag básico
+  const color = isDarkMode ? "#030712" : "#d1d5db";
+  let metaThemeColor = document.querySelector("meta[name='theme-color']");
 
-    // B. EL TRUCO PARA SAFARI: Destruir y recrear el meta-tag
-    const oldMeta = document.querySelector("meta[name='theme-color']");
-    if (oldMeta) {
-      oldMeta.remove(); // Lo borramos por completo
-    }
-
-    // Creamos uno nuevo desde cero
-    const newMeta = document.createElement("meta");
-    newMeta.name = "theme-color";
-    newMeta.content = currentColor;
-    document.head.appendChild(newMeta); // Safari lo detecta como un elemento nuevo y se repinta
-
-    // C. Forzamos al body a cambiar de color por código
-    document.body.style.backgroundColor = currentColor;
-  }, [isDarkMode]);
+  if (!metaThemeColor) {
+    metaThemeColor = document.createElement("meta");
+    metaThemeColor.setAttribute("name", "theme-color");
+    document.head.appendChild(metaThemeColor);
+  }
+  metaThemeColor.setAttribute("content", color);
+}, [isDarkMode]);
 
   // 2. EFECTO DE FIREBASE (Solo corre al cargar la app por primera vez)
   useEffect(() => {
@@ -60,7 +53,7 @@ const App = () => {
   return (
     // BrowserRouter es el "vigilante" que observa la URL del navegador
     <BrowserRouter>
-      <div className="min-h-screen bg-core-bg dark:bg-gray-950 transition-colors duration-300">
+      <div className="min-h-dvh bg-core-bg dark:bg-gray-950 transition-colors duration-300">
         {/* Estos 3 "muebles" siempre están en la pantalla, pase lo que pase */}
         <Navbar />
         <CartDrawer />
@@ -77,29 +70,30 @@ const App = () => {
             },
           }}
         />
+        <div className="pt-28 md:pt-16">
+          {/*-- Aquí ponemos las "Puertas" a las diferentes habitaciones --*/}
+          <Routes>
+            {/* Habitacion del login */}
+            <Route path="/login" element={<Login />} />
 
-        {/*-- Aquí ponemos las "Puertas" a las diferentes habitaciones --*/}
-        <Routes>
-          {/* Habitacion del login */}
-          <Route path="/login" element={<Login />} />
+            {/* Direccion de la habitacion para el catalogo(Incio)*/}
+            <Route path="/" element={<Home />} />
 
-          {/* Direccion de la habitacion para el catalogo(Incio)*/}
-          <Route path="/" element={<Home />} />
+            {/* Direccion de la habitacion de detalles de producto*/}
+            <Route path="/producto/:id" element={<ProductDetail />} />
 
-          {/* Direccion de la habitacion de detalles de producto*/}
-          <Route path="/producto/:id" element={<ProductDetail />} />
+            {/* Direccion de la habitacion de Favoritos */}
+            <Route path="/favoritos" element={<Favorites />}></Route>
 
-          {/* Direccion de la habitacion de Favoritos */}
-          <Route path="/favoritos" element={<Favorites />}></Route>
+            {/* Direccion de la habitacion del proceso de pago */}
+            <Route path="/checkout" element={<Checkout />} />
 
-          {/* Direccion de la habitacion del proceso de pago */}
-          <Route path="/checkout" element={<Checkout />} />
+            {/* Direccion de la habitacion de historial de compras(Orders) */}
+            <Route path="/mis-compras" element={<Orders />} />
 
-          {/* Direccion de la habitacion de historial de compras(Orders) */}
-          <Route path="/mis-compras" element={<Orders />} />
-
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
       </div>
     </BrowserRouter>
   );
