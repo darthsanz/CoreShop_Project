@@ -1,3 +1,4 @@
+//Fix types
 import { describe, it, expect, beforeEach } from "vitest";
 import { useCartStore } from "./cartStore";
 
