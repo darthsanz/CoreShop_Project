@@ -17,7 +17,7 @@ CoreShop es una plataforma de comercio electrónico moderna, rápida y escalable
 
 | Pantalla Principal | Carrito de Compras |
 | :---: | :---: |
-| ![Inicio](./coreshop/screenshots/inicio.png) | ![Carrito](./coreshop/screenshots/carrito.png) |
+| ![Inicio](./screenshots/inicio.png) | ![Carrito](./screenshots/carrito.png) |
 | *Vista general de productos con soporte Dark Mode.* | *Gestión de estado global ágil y persistente.* |
 
 
@@ -25,12 +25,12 @@ CoreShop es una plataforma de comercio electrónico moderna, rápida y escalable
 
 ## Características Principales (Features)
 
-* 🛍️ **Carrito de Compras Persistente:** Gestión de estado global ultra rápida utilizando **Zustand**, con persistencia de datos en `localStorage`.
-* 🌍 **Internacionalización (i18n):** Soporte multi-idioma integrado y optimizado.
-* 🔐 **Autenticación Segura:** Sincronización de estado en tiempo real con **Firebase Auth**.
-* 📱 **Mobile-First & Cross-Browser:** Optimizaciones específicas para iOS Safari (corrección de status bar, scroll elástico y renderizado de Dark Mode).
-* 🛡️ **Tipado Estricto:** Desarrollado 100% en **TypeScript** garantizando la integridad de las interfaces y modelos de datos.
-* ⚙️ **CI/CD & Testing:** Integración continua a través de **Vercel** y una suite de pruebas automatizadas configurada con **Vitest**.
+* **Carrito de Compras Persistente:** Gestión de estado global ultra rápida utilizando **Zustand**, con persistencia de datos en `localStorage`.
+* **Internacionalización (i18n):** Soporte multi-idioma integrado y optimizado.
+* **Autenticación Segura:** Sincronización de estado en tiempo real con **Firebase Auth**.
+* **Mobile-First & Cross-Browser:** Optimizaciones específicas para iOS Safari (corrección de status bar, scroll elástico y renderizado de Dark Mode).
+* **Tipado Estricto:** Desarrollado 100% en **TypeScript** garantizando la integridad de las interfaces y modelos de datos.
+* **CI/CD & Testing:** Integración continua a través de **Vercel** y una suite de pruebas automatizadas configurada con **Vitest**.
 
 ---
 
